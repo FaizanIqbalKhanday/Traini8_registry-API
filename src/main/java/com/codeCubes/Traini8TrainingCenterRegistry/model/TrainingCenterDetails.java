@@ -1,12 +1,10 @@
 package com.codeCubes.Traini8TrainingCenterRegistry.model;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 public class TrainingCenterDetails {
@@ -14,33 +12,54 @@ public class TrainingCenterDetails {
     @Id
     private String centerCode;
     private int StudentCapacity;
+
     LocalDate createdOn;
 
     private String contactEmail;
     private String contactPhone;
     @Embedded
     Address address;
+    @ElementCollection
+    private List<String> coursesOffered;
 
     public TrainingCenterDetails() {
         this.createdOn=LocalDate.now();
     }
 
-    public TrainingCenterDetails(String centerName, String centerCode,int studentCapacity, String contactEmail, String contactPhone,Address address) {
+    public TrainingCenterDetails
+            (String centerName, String centerCode,int studentCapacity, String contactEmail,
+             String contactPhone,Address address,List<String> coursesOffered) {
         this.centerName = centerName;
         this.centerCode = centerCode;
         StudentCapacity = studentCapacity;
+        this.coursesOffered=coursesOffered;
         this.contactEmail = contactEmail;
         this.contactPhone = contactPhone;
         this.address=address;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<String> getCoursesOffered() {
+        return coursesOffered;
+    }
+
+    public void setCoursesOffered(List<String> coursesOffered) {
+        this.coursesOffered = coursesOffered;
+    }
 
     public LocalDate getCreatedOn() {
         return createdOn;
     }
 
     public void setCreatedOn(LocalDate createdOn) {
-        this.createdOn = createdOn;
+        this.createdOn = LocalDate.now();
     }
 
     public String getCenterName() {
@@ -84,6 +103,7 @@ public class TrainingCenterDetails {
     }
 }
 
+@Embeddable
 class Address{
     private String pinCode;
     private String city;
