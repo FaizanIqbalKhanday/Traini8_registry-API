@@ -19,15 +19,18 @@ public class TrainingCenterController {
         this.trainingCenterService = trainingCenterService;
     }
     @PostMapping
-    public String createTrainingCenter(@Valid @RequestBody TrainingCenterDetails trainingCenterDetails){
+    public ResponseEntity<Object> createTrainingCenter(@Valid @RequestBody TrainingCenterDetails trainingCenterDetails){
         trainingCenterService.createTrainingCenter(trainingCenterDetails);
-        return "training center added successfully";
+        return ResponseHandler.responseBuilder(
+                "Training center added successfully", HttpStatus.CREATED, trainingCenterDetails);
 
     }
     @GetMapping("/{centercode}")
     public ResponseEntity<Object> getTrainingCenterDetails(@PathVariable("centercode") String centerCode){
 
-        return ResponseHandler.responseBuilder("Requested vendor details are given here", HttpStatus.OK,trainingCenterService.getTrainingCenter(centerCode));
+        return ResponseHandler.responseBuilder(
+                "Training center details are given here",
+                HttpStatus.OK,trainingCenterService.getTrainingCenter(centerCode));
     }
     @GetMapping
     public List<TrainingCenterDetails>getAllTrainingCenters(){

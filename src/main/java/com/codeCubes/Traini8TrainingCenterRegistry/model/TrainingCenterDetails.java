@@ -1,28 +1,30 @@
 package com.codeCubes.Traini8TrainingCenterRegistry.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 @Entity
 public class TrainingCenterDetails {
-   //@NotEmpty(message = "center name is required !")
-   //@Size(max = 40,message = "center name can not be greater than 40")
+    @NotEmpty(message = "center name is required !")
+    @Size(max = 40,message = "center name can not be greater than 40")
     private String centerName;
     @Id
-   // @Pattern(regexp = "\\w{8}", message = "Center code must be exactly 12 alphanumeric characters")
+    @Pattern(regexp = "\\w{6}", message = "Center code must be exactly 6 alphanumeric characters")
     private String centerCode;
     private int StudentCapacity;
 
     LocalDate createdOn;
 
     private String contactEmail;
-   // @Pattern(regexp = "\\d{10}", message = "Invalid phone number")
+    @Pattern(regexp = "\\d{10}", message = "Invalid phone number")
     private String contactPhone;
     @Embedded
     Address address;
     @ElementCollection
+    @NotEmpty(message = "At least one course must be offered")
     private List<String> coursesOffered;
 
     public TrainingCenterDetails() {
@@ -108,24 +110,27 @@ public class TrainingCenterDetails {
 
 @Embeddable
 class Address{
-    private String pinCode;
+    @Pattern(regexp = "\\d{6}", message = "Pin code must be exactly 6 digits")
+    private int pinCode;
+    @NotEmpty(message = "City is required")
     private String city;
+    @NotEmpty(message = "State is required")
     private String state;
 
     public Address() {
     }
 
-    public Address(String pinCode, String city, String state) {
+    public Address(int pinCode, String city, String state) {
         this.pinCode = pinCode;
         this.city = city;
         this.state = state;
     }
 
-    public String getPinCode() {
+    public int getPinCode() {
         return pinCode;
     }
 
-    public void setPinCode(String pinCode) {
+    public void setPinCode(int pinCode) {
         this.pinCode = pinCode;
     }
 
