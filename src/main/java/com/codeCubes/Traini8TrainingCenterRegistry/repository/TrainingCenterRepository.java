@@ -8,4 +8,5 @@ import java.util.List;
 public interface TrainingCenterRepository extends JpaRepository<TrainingCenterDetails,String> {
     List<TrainingCenterDetails>findByCenterName(String centerName);
     List<TrainingCenterDetails>findByCenterCode(String centerCode);
+    void deleteByCenterCode(String centerCode);
 }

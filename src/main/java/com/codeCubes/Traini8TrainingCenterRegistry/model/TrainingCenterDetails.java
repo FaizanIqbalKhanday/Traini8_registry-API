@@ -1,21 +1,24 @@
 package com.codeCubes.Traini8TrainingCenterRegistry.model;
-
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-
 @Entity
 public class TrainingCenterDetails {
+   //@NotEmpty(message = "center name is required !")
+   //@Size(max = 40,message = "center name can not be greater than 40")
     private String centerName;
     @Id
+   // @Pattern(regexp = "\\w{8}", message = "Center code must be exactly 12 alphanumeric characters")
     private String centerCode;
     private int StudentCapacity;
 
     LocalDate createdOn;
 
     private String contactEmail;
+   // @Pattern(regexp = "\\d{10}", message = "Invalid phone number")
     private String contactPhone;
     @Embedded
     Address address;
